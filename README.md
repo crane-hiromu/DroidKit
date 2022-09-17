@@ -19,7 +19,7 @@ However, there is a problem.
 
 Currently, [the app has been removed from the store and cannot be installed](https://community.sphero.com/t/droid-inventor-kit-app-gone-from-play-app-store/2783).
 
-Therefore, I created code that the droid can be operated from **Swift**, and provide it.
+Therefore, I provide code can operate the droid from **Swift**.
 
 <br>
 
