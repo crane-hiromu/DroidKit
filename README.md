@@ -40,3 +40,21 @@ If you want to use it, please remove the code comment out in [DroidApp.swift](ht
 ## Document
 
 wip
+
+<br>
+
+## Install
+
+### Swift Package Manager
+
+Add the following dependency to your Package.swift file:
+
+```
+.package(url: "https://github.com/crane-hiromu/DroidKit", from: "x.x.x")
+```
+
+<br>
+
+## License
+
+MIT, of course ;-) See the LICENSE file.
