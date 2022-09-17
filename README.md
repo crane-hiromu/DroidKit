@@ -37,9 +37,187 @@ If you want to use it, please remove the code comment out in [DroidApp.swift](ht
 
 <br>
 
+## Code
+
+There are 2 core code in this package.
+
+These are inspired by [tinkertanker/DroidKit](https://github.com/tinkertanker/DroidKit) and are also built on a **'Concurrency'** basis with [AsyncBluetooth](https://github.com/manolofdez/AsyncBluetooth).
+
+### - DroidConnector.swift
+
+```.swift
+public protocol DroidConnectorProtocol: AnyObject {
+    var eventPublisher: AnyPublisher<CentralManagerEvent, Never> { get }
+    
+    /// CentralManager Method
+    func scan() async throws
+    func connect() async throws
+    func disconnect() async throws
+    
+    /// Peripheral Method
+    func discoverServices() async throws
+    func discoverCharacteristics() async throws
+    func setNotifyValue(with characteristic: Characteristic) async throws
+    func setNotifyValues() async throws
+    func writeValue(command: UInt8, payload: [UInt8]) async throws
+}
+```
+
+This code contains the implementation around **Bluetooth**.
+
+You can access it, but basically you don't have to do it.
+
+### - DroidOperator.swift
+
+```.swift
+public protocol DroidOperatorProtocol: AnyObject {
+    var eventPublisher: AnyPublisher<CentralManagerEvent, Never> { get }
+    
+    /// Connection Method
+    func connect() async throws
+    func disconnect() async throws
+    
+    /// Action Method
+    func action(command: DroidCommand, payload: [UInt8]) async throws
+    func go(at speed: Double) async throws
+    func back(at speed: Double) async throws
+    func turn(by degree: Double) async throws
+    func stop(_ type: DroidWheel) async throws
+    func changeLEDColor(to color: UIColor) async throws
+    func playSound(_ type: DroidSound) async throws
+    func wait(for seconds: Double) async throws
+}
+```
+
+This code contains the implementation around droid operation.
+
+You can operate droid.
+
+<br>
+
 ## Document
 
-wip
+The following actions can be used.
+
+### - connect
+
+Turn on the connection.
+
+```.swift
+Task {
+    do {
+        try await DroidOperator.default.connect()
+    } catch {
+        // catch error
+    }
+}
+```
+
+### - disconnect
+
+Turn off the connection.
+
+```.swift
+Task {
+    do {
+        try await DroidOperator.default.disconnect()
+    } catch {
+        // catch error
+    }
+}
+```
+
+### - go
+
+Move forward.
+
+```.swift
+Task {
+    do {
+        try await DroidOperator.default.go(at: 0.7)
+    } catch {
+        // catch error
+    }
+}
+```
+
+### - back
+
+```.swift
+Task {
+    do {
+        try await DroidOperator.default.back(at: 0.3)
+    } catch {
+        // catch error
+    }
+}
+```
+
+### - turn
+
+Turn towards.
+
+```.swift
+Task {
+    do {
+        try await DroidOperator.default.turn(by: 30)
+    } catch {
+        // catch error
+    }
+}
+```
+
+### - stop
+
+```.swift
+Task {
+    do {
+        try await DroidOperator.default.stop(.move)
+    } catch {
+        // catch error
+    }
+}
+```
+
+### - changeLEDColor
+
+```.swift
+Task {
+    do {
+        try await DroidOperator.default.changeLEDColor(to: .blue)
+    } catch {
+        // catch error
+    }
+}
+```
+
+### - playSound
+
+```.swift
+Task {
+    do {
+        try await DroidOperator.default.playSound(.s10)
+    } catch {
+        // catch error
+    }
+}
+```
+
+### - wait
+
+Keep the action.
+
+```.swift
+Task {
+    do {
+        try await DroidOperator.default.go(at: 0.7)
+        try await DroidOperator.default.wait(for: 2)
+        try await DroidOperator.default.stop(.move)
+    } catch {
+        // catch error
+    }
+}
+```
 
 <br>
 
@@ -58,3 +236,4 @@ Add the following dependency to your Package.swift file:
 ## License
 
 MIT, of course ;-) See the LICENSE file.
+
