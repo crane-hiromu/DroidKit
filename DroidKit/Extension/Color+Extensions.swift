@@ -2,7 +2,7 @@
 //  Color+Extensions.swift
 //  
 //
-//  Created by h.tsuruta on 2022/09/18.
+//  Created by h.crane on 2022/09/18.
 //
 
 import Foundation

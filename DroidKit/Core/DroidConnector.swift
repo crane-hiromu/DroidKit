@@ -51,6 +51,7 @@ extension DroidConnector: DroidConnectorProtocol {
     
     // MARK: CentralManager Method
     
+    /// scan BLE service id
     public func scan() async throws {
         try await centralManager.waitUntilReady()
         
@@ -65,6 +66,7 @@ extension DroidConnector: DroidConnectorProtocol {
         await centralManager.stopScan()
     }
     
+    /// connect BLE service
     public func connect() async throws {
         guard let data = scanData else {
             throw DroidError.noScanData
@@ -72,6 +74,7 @@ extension DroidConnector: DroidConnectorProtocol {
         try await centralManager.connect(data.peripheral)
     }
     
+    /// disconnect BLE service
     public func disconnect() async throws {
         guard let data = scanData else {
             throw DroidError.noScanData
