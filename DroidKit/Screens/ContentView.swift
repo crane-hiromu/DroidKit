@@ -14,9 +14,9 @@ struct ContentView: View {
                         try await droidOperator.changeLEDColor(to: .green)
                         try await droidOperator.turn(by: 15)
                         try await droidOperator.go(at: 0.5)
-                        droidOperator.wait(for: 1)
+                        try await droidOperator.wait(for: 1)
                         try await droidOperator.back(at: 0.5)
-                        droidOperator.wait(for: 1)
+                        try await droidOperator.wait(for: 1)
                         try await droidOperator.stop(.move)
                         try await droidOperator.stop(.turn)
                     } catch {
