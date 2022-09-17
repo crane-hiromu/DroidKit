@@ -2,7 +2,7 @@
 
 ## Description
 
-### Do you know **'Droid Inventor Kit'** ?
+### - Do you know **'Droid Inventor Kit'** ?
 
 ![littlebits-box-1-1024x686](https://user-images.githubusercontent.com/24838521/190877953-560dd403-e13f-4e0d-a3af-90ebd0cf1393.jpeg)
 
@@ -25,7 +25,7 @@ In short, you can create your own application with this **Swift** package.
 
 <br>
 
-### Sample App
+### - Sample App
 
 |App|Color Picker|Sound Menu|
 |:---:|:---:|:---:|
