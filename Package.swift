@@ -8,16 +8,14 @@ import PackageDescription
 import AppleProductTypes
 
 let package = Package(
-    name: "DroidController",
+    name: "DroidKit",
     platforms: [
         .iOS("15.2")
     ],
     products: [
         .iOSApplication(
-            name: "DroidController",
+            name: "DroidKit",
             targets: ["AppModule"],
-            bundleIdentifier: "hcrane.droid.controller",
-            teamIdentifier: "R82WJ5W3TV",
             displayVersion: "1.0",
             bundleVersion: "1",
             appIcon: .placeholder(icon: .pencil),
@@ -33,7 +31,7 @@ let package = Package(
                 .portraitUpsideDown(.when(deviceFamilies: [.pad]))
             ],
             capabilities: [
-                .bluetoothAlways(purposeString: "Unknown Usage Description")
+                .bluetoothAlways(purposeString: "Allow bluetooth permission")
             ]
         )
     ],
