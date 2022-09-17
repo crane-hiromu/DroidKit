@@ -10,10 +10,9 @@ import Combine
 import AsyncBluetooth
 import UIKit
 
-// MARK: - Manager Protocol
-protocol DroidManagerProtocol: AnyObject {
+// MARK: - Connector Protocol
+protocol DroidConnectorProtocol: AnyObject {
     var eventPublisher: AnyPublisher<CentralManagerEvent, Never> { get }
-    func configure() async throws
     
     /// CentralManager Method
     func scan() async throws
@@ -25,24 +24,15 @@ protocol DroidManagerProtocol: AnyObject {
     func discoverCharacteristics() async throws
     func setNotifyValue(with characteristic: Characteristic) async throws
     func setNotifyValues() async throws
-    func writeValue(with value: Data, and characteristic: Characteristic) async throws
-    
-    /// Command Method
-    func go(at speed: Double) async throws
-    func back(at speed: Double) async throws
-    func turn(by degree: Double) async throws
-    func stop(_ type: DroidWheel) async throws
-    func changeLEDColor(to color: UIColor) async throws
-    func playSound(_ type: DroidSound) async throws
-    func wait(for seconds: TimeInterval)
+    func writeValue(command: UInt8, payload: [UInt8]) async throws
 }
 
 // MARK: - Manager
-final class DroidManager {
+final class DroidConnector {
     
     // MARK: Singleton
     
-    static let `default` = DroidManager()
+    static let `default` = DroidConnector()
     private init() {}
     
     // MARK: Property
@@ -52,18 +42,11 @@ final class DroidManager {
 }
 
 // MARK: - DroidManagerProtocol
-extension DroidManager: DroidManagerProtocol {
+extension DroidConnector: DroidConnectorProtocol {
     
+    /// handle event of CentralManager's state
     var eventPublisher: AnyPublisher<CentralManagerEvent, Never> {
         centralManager.eventPublisher
-    }
-    
-    func configure() async throws {
-        try await scan()
-        try await connect()
-        try await discoverServices()
-        try await discoverCharacteristics()
-        try await setNotifyValues()
     }
     
     // MARK: CentralManager Method
@@ -157,63 +140,20 @@ extension DroidManager: DroidManagerProtocol {
         }
     }
     
-    func writeValue(with value: Data, and characteristic: Characteristic) async throws {
+    func writeValue(command: UInt8, payload: [UInt8]) async throws {
         guard let data = scanData else {
             throw DroidError.noScanData
         }
-        try await data.peripheral.writeValue(value, for: characteristic, type: .withResponse)
-    }
-    
-    // MARK: Command Method
-    
-    /// move forward
-    func go(at speed: Double) async throws {
-        guard 0...1 ~= speed else { return }
-        let payload = [DroidWheel.move.rawValue, DroidWheelOption.go(speed: speed).value]
-        try await action(command: .moveWheel, payload: payload)
-    }
-    
-    /// move back
-    func back(at speed: Double) async throws {
-        guard 0...1 ~= speed else { return }
-        let payload = [DroidWheel.move.rawValue, DroidWheelOption.back(speed: speed).value]
-        try await action(command: .moveWheel, payload: payload)
-    }
-    
-    /// turn towards
-    /// - right: 0~90
-    /// - left: 90~180
-    func turn(by degree: Double) async throws {
-        guard 0...180 ~= degree else { return }
-        let payload = [DroidWheel.turn.rawValue, DroidWheelOption.turn(degree: degree).value]
-        try await action(command: .moveWheel, payload: payload)
-    }
-    
-    /// stop moving
-    func stop(_ type: DroidWheel) async throws {
-        let payload = [type.rawValue, DroidWheelOption.end.value]
-        try await action(command: .moveWheel, payload: payload)
-    }
-    
-    /// change body's LED ramp color
-    func changeLEDColor(to color: UIColor) async throws {
-        let payload = [color.asRGB.red, color.asRGB.green, color.asRGB.blue]
-        try await action(command: .changeLEDColor, payload: payload)
-    }
-    
-    /// play sound from droid
-    func playSound(_ type: DroidSound) async throws {
-        let payload = [type.rawValue]
-        try await action(command: .playSound, payload: payload)
-    }
-    
-    func wait(for seconds: TimeInterval) {
-        Thread.sleep(forTimeInterval: seconds)
+        guard let characteristic = getCharacteristic(from: .W32_BITSNAP_CHARACTERISTIC) else {
+            throw DroidError.noCharacteristic
+        }
+        let value = rawData(command: command, payload: payload)
+        try await data.peripheral.writeValue(Data(value), for: characteristic, type: .withResponse)
     }
 }
 
-// MARK: - Private
-private extension DroidManager {
+// MARK: - Internal
+extension DroidConnector {
     
     var characteristics: [Characteristic] {
         scanData?
@@ -223,23 +163,15 @@ private extension DroidManager {
             .flatMap { $0 } ?? []
     }
     
-    func action(command: DroidCommand, payload: [UInt8]) async throws {
-        guard let characteristic = getCharacteristic(from: .W32_BITSNAP_CHARACTERISTIC) else {
-            throw DroidError.noCharacteristic
-        }
-        let rawData = rawData(command: command, payload: payload)
-        try await writeValue(with: Data(rawData), and: characteristic)
-    }
-    
     func getCharacteristic(from type: DroidBLE) -> Characteristic? {
         characteristics.first { $0.uuid.uuidString.lowercased() == type.rawValue }
     }
     
-    func rawData(command: DroidCommand, payload: [UInt8]) -> [UInt8] {
+    func rawData(command: UInt8, payload: [UInt8]) -> [UInt8] {
         var rawData: [UInt8] = .init(repeating: 0, count: payload.count + 4)
         let crc = generateChecksumCRC16(bytes: payload)
         
-        rawData[0] = UInt8((command.rawValue << 1) | (UInt8((payload.count & 256)) >> 8))
+        rawData[0] = UInt8((command << 1) | (UInt8((payload.count & 256)) >> 8))
         rawData[1] = UInt8(payload.count & 255)
         
         for (n, item) in payload.enumerated() {
