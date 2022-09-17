@@ -8,6 +8,7 @@
 import Foundation
 import Combine
 import AsyncBluetooth
+import UIKit
 
 // MARK: - Manager Protocol
 protocol DroidManagerProtocol: AnyObject {
@@ -27,7 +28,13 @@ protocol DroidManagerProtocol: AnyObject {
     func writeValue(with value: Data, and characteristic: Characteristic) async throws
     
     /// Command Method
-    func playSound(with type: SoundType) async throws
+    func go(at speed: Double) async throws
+    func back(at speed: Double) async throws
+    func turn(by degree: Double) async throws
+    func stop(_ type: WheelType) async throws
+    func changeLEDColor(to color: UIColor) async throws
+    func playSound(_ type: SoundType) async throws
+    func wait(for seconds: TimeInterval)
 }
 
 // MARK: - Manager
@@ -125,23 +132,10 @@ extension DroidManager: DroidManagerProtocol {
         try await data.peripheral.discoverDescriptors(for: characteristic)
         let uuid = characteristic.uuid.uuidString.lowercased()
         
-        switch BLEType(rawValue: uuid) {
-        case .W32_BITSNAP_CHARACTERISTIC,
-             .W32_AUDIO_UPLOAD_CHARACTERISTIC,
-             .W32_BOARD_CONTROL_CHARACTERISTIC:
-            
-            do {
-                try await data.peripheral.setNotifyValue(true, for: characteristic)
-            } catch {
-                debugPrint("error: \(error)")
-            }
-            
-        case .UUID_W32_SERVICE,
-             .CLIENT_CHARACTERISTIC_CONFIG,
-             .none:
-
-            break
+        guard let _ = BLEType(rawValue: uuid) else {
+            throw DroidError.noBluetoothType
         }
+        try await data.peripheral.setNotifyValue(true, for: characteristic)
     }
     
     func setNotifyValues() async throws {
@@ -155,7 +149,11 @@ extension DroidManager: DroidManagerProtocol {
             .flatMap { $0 } ?? []
         
         for char in chars {
-            try await setNotifyValue(with: char)
+            do {
+                try await setNotifyValue(with: char)
+            } catch {
+                debugPrint("error: \(error)")
+            }
         }
     }
     
@@ -168,12 +166,49 @@ extension DroidManager: DroidManagerProtocol {
     
     // MARK: Command Method
     
-    func playSound(with type: SoundType) async throws {
-        guard let characteristic = getCharacteristic(from: .W32_BITSNAP_CHARACTERISTIC) else {
-            throw DroidError.noCharacteristic
-        }
-        let rawData = rawData(command: .playSound, payload: [type.rawValue])
-        try await writeValue(with: Data(rawData), and: characteristic)
+    /// move forward
+    func go(at speed: Double) async throws {
+        guard 0...1 ~= speed else { return }
+        let payload = [WheelType.move.rawValue, WheelType.go(at: speed)]
+        try await action(command: .moveWheel, payload: payload)
+    }
+    
+    /// move back
+    func back(at speed: Double) async throws {
+        guard 0...1 ~= speed else { return }
+        let payload = [WheelType.move.rawValue, WheelType.back(at: speed)]
+        try await action(command: .moveWheel, payload: payload)
+    }
+    
+    /// turn towards
+    /// - right: 0~90
+    /// - left: 90~180
+    func turn(by degree: Double) async throws {
+        guard 0...180 ~= degree else { return }
+        let payload = [WheelType.turn.rawValue, WheelType.turn(by: degree)]
+        try await action(command: .moveWheel, payload: payload)
+    }
+    
+    /// stop moving
+    func stop(_ type: WheelType) async throws {
+        let payload = [type.rawValue, WheelType.end]
+        try await action(command: .moveWheel, payload: payload)
+    }
+    
+    /// change body's LED ramp color
+    func changeLEDColor(to color: UIColor) async throws {
+        let payload = [color.asRGB.red, color.asRGB.green, color.asRGB.blue]
+        try await action(command: .changeLEDColor, payload: payload)
+    }
+    
+    /// play sound from droid
+    func playSound(_ type: SoundType) async throws {
+        let payload = [type.rawValue]
+        try await action(command: .playSound, payload: payload)
+    }
+    
+    func wait(for seconds: TimeInterval) {
+        Thread.sleep(forTimeInterval: seconds)
     }
 }
 
@@ -187,14 +222,21 @@ private extension DroidManager {
             .compactMap(\.discoveredCharacteristics)
             .flatMap { $0 } ?? []
     }
-        
+    
+    func action(command: DroidCommand, payload: [UInt8]) async throws {
+        guard let characteristic = getCharacteristic(from: .W32_BITSNAP_CHARACTERISTIC) else {
+            throw DroidError.noCharacteristic
+        }
+        let rawData = rawData(command: command, payload: payload)
+        try await writeValue(with: Data(rawData), and: characteristic)
+    }
+    
     func getCharacteristic(from type: BLEType) -> Characteristic? {
         characteristics.first { $0.uuid.uuidString.lowercased() == type.rawValue }
     }
     
     func rawData(command: DroidCommand, payload: [UInt8]) -> [UInt8] {
         var rawData: [UInt8] = .init(repeating: 0, count: payload.count + 4)
-        
         let crc = generateChecksumCRC16(bytes: payload)
         
         rawData[0] = UInt8((command.rawValue << 1) | (UInt8((payload.count & 256)) >> 8))
@@ -211,9 +253,7 @@ private extension DroidManager {
     }
     
     func generateChecksumCRC16(bytes: [UInt8]) -> Int {
-        var bit = false
-        var c15 = false
-        var crc = 65535
+        var bit = false, c15 = false, crc = 65535
         
         for b in bytes {
             for i in 0..<8 {

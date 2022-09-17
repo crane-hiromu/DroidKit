@@ -21,6 +21,16 @@ struct ContentView: View {
                 Task {
                     do {
                         try await manager.configure()
+                        
+                        try await manager.playSound(.s4)
+//                        try await manager.changeLEDColor(to: .green)
+//                        try await manager.turnWheel(by: .degrees(0))
+//                        try await manager.stopWheel()
+                        try await manager.go(at: 0.5)
+                        manager.wait(for: 1)
+                        try await manager.back(at: 0.5)
+                        manager.wait(for: 1)
+                        try await manager.stop(.move)
                     } catch {
                         debugPrint("connect error: \(error.localizedDescription)")
                     }

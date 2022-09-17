@@ -31,17 +31,18 @@
 		cHBNb2R1bGUiXSwidHlwZSI6eyJleGVjdXRhYmxlIjpudWxsfX1dLCJ0YXJn
 		ZXRNYXAiOnsiQXBwTW9kdWxlIjp7ImRlcGVuZGVuY2llcyI6W3sicHJvZHVj
 		dCI6WyJBc3luY0JsdWV0b290aCIsIkFzeW5jQmx1ZXRvb3RoIixudWxsXX1d
-		LCJleGNsdWRlIjpbXSwibmFtZSI6IkFwcE1vZHVsZSIsInBhdGgiOiIuIiwi
-		cmVzb3VyY2VzIjpbXSwic2V0dGluZ3MiOltdLCJ0eXBlIjoiZXhlY3V0YWJs
-		ZSJ9fSwidGFyZ2V0cyI6W3siZGVwZW5kZW5jaWVzIjpbeyJwcm9kdWN0Ijpb
-		IkFzeW5jQmx1ZXRvb3RoIiwiQXN5bmNCbHVldG9vdGgiLG51bGxdfV0sImV4
-		Y2x1ZGUiOltdLCJuYW1lIjoiQXBwTW9kdWxlIiwicGF0aCI6Ii4iLCJyZXNv
-		dXJjZXMiOltdLCJzZXR0aW5ncyI6W10sInR5cGUiOiJleGVjdXRhYmxlIn1d
-		LCJ0b29sc1ZlcnNpb24iOnsiX3ZlcnNpb24iOiI1LjYuMCJ9fQ==
+		LCJleGNsdWRlIjpbIlJFQURNRS5tZCIsIkxJQ0VOU0UiXSwibmFtZSI6IkFw
+		cE1vZHVsZSIsInBhdGgiOiIuIiwicmVzb3VyY2VzIjpbXSwic2V0dGluZ3Mi
+		OltdLCJ0eXBlIjoiZXhlY3V0YWJsZSJ9fSwidGFyZ2V0cyI6W3siZGVwZW5k
+		ZW5jaWVzIjpbeyJwcm9kdWN0IjpbIkFzeW5jQmx1ZXRvb3RoIiwiQXN5bmNC
+		bHVldG9vdGgiLG51bGxdfV0sImV4Y2x1ZGUiOlsiUkVBRE1FLm1kIiwiTElD
+		RU5TRSJdLCJuYW1lIjoiQXBwTW9kdWxlIiwicGF0aCI6Ii4iLCJyZXNvdXJj
+		ZXMiOltdLCJzZXR0aW5ncyI6W10sInR5cGUiOiJleGVjdXRhYmxlIn1dLCJ0
+		b29sc1ZlcnNpb24iOnsiX3ZlcnNpb24iOiI1LjYuMCJ9fQ==
 		</data>
 		<key>manifestHash</key>
 		<data>
-		Y4lgMC/0EJ+PFVDKmZ9X3j5qmQKWNXUS2Ac1bXpUVb4=
+		/IfQneRix9PSx8ebHC8LSuWQNeaI3/wMZ/KHqSRBC60=
 		</data>
 		<key>schemaVersion</key>
 		<integer>4</integer>
