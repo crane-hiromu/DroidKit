@@ -1,22 +1,10 @@
 import SwiftUI
 
 struct ContentView: View {
-    var droid = Droid()
     var manager: DroidManagerProtocol = DroidManager.default
     
     var body: some View {
         VStack {
-            Button("droid") {
-                droid.onConnect {
-                    droid.move(.forward, atSpeed: 1)
-                    droid.wait(for: 1)
-                    droid.stop()
-                    
-//                    droid.changeLEDColor(to: .blue)
-                }
-                droid.search()
-            }
-            
             Button("connect") {
                 Task {
                     do {

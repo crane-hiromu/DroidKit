@@ -7,7 +7,7 @@
 
 import Foundation
 
-// MARK: - Error
+// MARK: - Error Type
 enum DroidError: Error, LocalizedError {
     case noScanData
     case noDiscoverServices

@@ -31,9 +31,9 @@ protocol DroidManagerProtocol: AnyObject {
     func go(at speed: Double) async throws
     func back(at speed: Double) async throws
     func turn(by degree: Double) async throws
-    func stop(_ type: WheelType) async throws
+    func stop(_ type: DroidWheel) async throws
     func changeLEDColor(to color: UIColor) async throws
-    func playSound(_ type: SoundType) async throws
+    func playSound(_ type: DroidSound) async throws
     func wait(for seconds: TimeInterval)
 }
 
@@ -71,10 +71,10 @@ extension DroidManager: DroidManagerProtocol {
     func scan() async throws {
         try await centralManager.waitUntilReady()
         
-        let ids = [BLEType.UUID_W32_SERVICE.uuid]
+        let ids = [DroidBLE.UUID_W32_SERVICE.uuid]
         let scanDataStream = try await centralManager.scanForPeripherals(withServices: ids)
         for await scanData in scanDataStream {
-            if scanData.peripheral.name == BLEType.W32_CONTROL_HUB {
+            if scanData.peripheral.name == DroidBLE.W32_CONTROL_HUB {
                 self.scanData = scanData
                 break
             }
@@ -102,7 +102,7 @@ extension DroidManager: DroidManagerProtocol {
         guard let data = scanData else {
             throw DroidError.noScanData
         }
-        let ids = [BLEType.UUID_W32_SERVICE.uuid]
+        let ids = [DroidBLE.UUID_W32_SERVICE.uuid]
         try await data.peripheral.discoverServices(ids)
     }
     
@@ -115,7 +115,7 @@ extension DroidManager: DroidManagerProtocol {
             throw DroidError.noDiscoverServices
         }
         
-        let types: [BLEType] = [
+        let types: [DroidBLE] = [
             .W32_AUDIO_UPLOAD_CHARACTERISTIC,
             .W32_BITSNAP_CHARACTERISTIC,
             .W32_BOARD_CONTROL_CHARACTERISTIC
@@ -132,7 +132,7 @@ extension DroidManager: DroidManagerProtocol {
         try await data.peripheral.discoverDescriptors(for: characteristic)
         let uuid = characteristic.uuid.uuidString.lowercased()
         
-        guard let _ = BLEType(rawValue: uuid) else {
+        guard let _ = DroidBLE(rawValue: uuid) else {
             throw DroidError.noBluetoothType
         }
         try await data.peripheral.setNotifyValue(true, for: characteristic)
@@ -169,14 +169,14 @@ extension DroidManager: DroidManagerProtocol {
     /// move forward
     func go(at speed: Double) async throws {
         guard 0...1 ~= speed else { return }
-        let payload = [WheelType.move.rawValue, WheelType.go(at: speed)]
+        let payload = [DroidWheel.move.rawValue, DroidWheelOption.go(speed: speed).value]
         try await action(command: .moveWheel, payload: payload)
     }
     
     /// move back
     func back(at speed: Double) async throws {
         guard 0...1 ~= speed else { return }
-        let payload = [WheelType.move.rawValue, WheelType.back(at: speed)]
+        let payload = [DroidWheel.move.rawValue, DroidWheelOption.back(speed: speed).value]
         try await action(command: .moveWheel, payload: payload)
     }
     
@@ -185,13 +185,13 @@ extension DroidManager: DroidManagerProtocol {
     /// - left: 90~180
     func turn(by degree: Double) async throws {
         guard 0...180 ~= degree else { return }
-        let payload = [WheelType.turn.rawValue, WheelType.turn(by: degree)]
+        let payload = [DroidWheel.turn.rawValue, DroidWheelOption.turn(degree: degree).value]
         try await action(command: .moveWheel, payload: payload)
     }
     
     /// stop moving
-    func stop(_ type: WheelType) async throws {
-        let payload = [type.rawValue, WheelType.end]
+    func stop(_ type: DroidWheel) async throws {
+        let payload = [type.rawValue, DroidWheelOption.end.value]
         try await action(command: .moveWheel, payload: payload)
     }
     
@@ -202,7 +202,7 @@ extension DroidManager: DroidManagerProtocol {
     }
     
     /// play sound from droid
-    func playSound(_ type: SoundType) async throws {
+    func playSound(_ type: DroidSound) async throws {
         let payload = [type.rawValue]
         try await action(command: .playSound, payload: payload)
     }
@@ -231,7 +231,7 @@ private extension DroidManager {
         try await writeValue(with: Data(rawData), and: characteristic)
     }
     
-    func getCharacteristic(from type: BLEType) -> Characteristic? {
+    func getCharacteristic(from type: DroidBLE) -> Characteristic? {
         characteristics.first { $0.uuid.uuidString.lowercased() == type.rawValue }
     }
     

@@ -1,13 +1,15 @@
 //
-//  BLEType.swift
-//  DroidKit
+//  DroidBLE.swift
 //
+//
+//  Created by h.tsuruta on 2022/09/17.
 //
 
 import Foundation
 import CoreBluetooth
 
-enum BLEType: String {
+// MARK: - BLE Type
+enum DroidBLE: String {
     case UUID_W32_SERVICE = "d9d9e9e0-aa4e-4797-8151-cb41cedaf2ad"
     case W32_BITSNAP_CHARACTERISTIC = "d9d9e9e1-aa4e-4797-8151-cb41cedaf2ad"
     case W32_BOARD_CONTROL_CHARACTERISTIC = "d9d9e9e2-aa4e-4797-8151-cb41cedaf2ad"
