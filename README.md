@@ -2,7 +2,7 @@
 
 ## Description
 
-Do you know 'Droid Inventor Kit' ?
+### Do you know **'Droid Inventor Kit'** ?
 
 ![littlebits-box-1-1024x686](https://user-images.githubusercontent.com/24838521/190877953-560dd403-e13f-4e0d-a3af-90ebd0cf1393.jpeg)
 
@@ -11,7 +11,7 @@ Do you know 'Droid Inventor Kit' ?
 
 <br>
 
-'Droid Inventor Kit' is a kit to create a droid. 
+**'Droid Inventor Kit'** is a kit to create a droid. 
 
 In addition, the droid can be moved with simple programming from a smartphone.
 
@@ -19,7 +19,19 @@ However, there is a problem.
 
 Currently, [the app has been removed from the store and cannot be installed](https://community.sphero.com/t/droid-inventor-kit-app-gone-from-play-app-store/2783/17).
 
-Therefore, I created code that the droid can be operated from Swift, and provide it.
+Therefore, I created code that the droid can be operated from **Swift**, and provide it.
+
+<br>
+
+### Sample App
+
+|App|Color Picker|Sound Menu|
+|:---:|:---:|:---:|
+|<img src="https://user-images.githubusercontent.com/24838521/190878634-ed828063-3215-4d18-9ce6-9493b13994e8.png" width=300>|<img src="https://user-images.githubusercontent.com/24838521/190878637-d149a8e2-14af-4622-80a2-54e416aa2959.png" width=300>|<img src="https://user-images.githubusercontent.com/24838521/190878640-acd9968e-4a0d-4a8d-93eb-ae166510b08c.png" width=300>|
+
+I have a screen in the code providing to check the operation.
+
+If you want to use it, please remove the code comment out in [DroidApp.swift](https://github.com/crane-hiromu/DroidKit/blob/main/DroidKit/Screen/DroidApp.swift) and build.
 
 <br>
 
