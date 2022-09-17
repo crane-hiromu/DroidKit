@@ -11,7 +11,7 @@ import AsyncBluetooth
 import UIKit
 
 // MARK: - Connector Protocol
-protocol DroidConnectorProtocol: AnyObject {
+public protocol DroidConnectorProtocol: AnyObject {
     var eventPublisher: AnyPublisher<CentralManagerEvent, Never> { get }
     
     /// CentralManager Method
@@ -28,11 +28,11 @@ protocol DroidConnectorProtocol: AnyObject {
 }
 
 // MARK: - Manager
-final class DroidConnector {
+public final class DroidConnector {
     
     // MARK: Singleton
     
-    static let `default` = DroidConnector()
+    public static let `default` = DroidConnector()
     private init() {}
     
     // MARK: Property
@@ -45,13 +45,13 @@ final class DroidConnector {
 extension DroidConnector: DroidConnectorProtocol {
     
     /// handle event of CentralManager's state
-    var eventPublisher: AnyPublisher<CentralManagerEvent, Never> {
+    public var eventPublisher: AnyPublisher<CentralManagerEvent, Never> {
         centralManager.eventPublisher
     }
     
     // MARK: CentralManager Method
     
-    func scan() async throws {
+    public func scan() async throws {
         try await centralManager.waitUntilReady()
         
         let ids = [DroidBLE.UUID_W32_SERVICE.uuid]
@@ -65,14 +65,14 @@ extension DroidConnector: DroidConnectorProtocol {
         await centralManager.stopScan()
     }
     
-    func connect() async throws {
+    public func connect() async throws {
         guard let data = scanData else {
             throw DroidError.noScanData
         }
         try await centralManager.connect(data.peripheral)
     }
     
-    func disconnect() async throws {
+    public func disconnect() async throws {
         guard let data = scanData else {
             throw DroidError.noScanData
         }
@@ -81,7 +81,7 @@ extension DroidConnector: DroidConnectorProtocol {
     
     // MARK: Peripheral Method
     
-    func discoverServices() async throws {
+    public func discoverServices() async throws {
         guard let data = scanData else {
             throw DroidError.noScanData
         }
@@ -89,7 +89,7 @@ extension DroidConnector: DroidConnectorProtocol {
         try await data.peripheral.discoverServices(ids)
     }
     
-    func discoverCharacteristics() async throws {
+    public func discoverCharacteristics() async throws {
         guard let data = scanData else {
             throw DroidError.noScanData
         }
@@ -108,7 +108,7 @@ extension DroidConnector: DroidConnectorProtocol {
         try await data.peripheral.discoverCharacteristics(ids, for: service)
     }
     
-    func setNotifyValue(with characteristic: Characteristic) async throws {
+    public func setNotifyValue(with characteristic: Characteristic) async throws {
         guard let data = scanData else {
             throw DroidError.noScanData
         }
@@ -121,7 +121,7 @@ extension DroidConnector: DroidConnectorProtocol {
         try await data.peripheral.setNotifyValue(true, for: characteristic)
     }
     
-    func setNotifyValues() async throws {
+    public func setNotifyValues() async throws {
         guard let data = scanData else {
             throw DroidError.noScanData
         }
@@ -140,7 +140,7 @@ extension DroidConnector: DroidConnectorProtocol {
         }
     }
     
-    func writeValue(command: UInt8, payload: [UInt8]) async throws {
+    public func writeValue(command: UInt8, payload: [UInt8]) async throws {
         guard let data = scanData else {
             throw DroidError.noScanData
         }

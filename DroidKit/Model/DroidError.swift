@@ -8,13 +8,13 @@
 import Foundation
 
 // MARK: - Error Type
-enum DroidError: Error, LocalizedError {
+public enum DroidError: Error, LocalizedError {
     case noScanData
     case noDiscoverServices
     case noCharacteristic
     case noBluetoothType
     
-    var errorDescription: String? {
+    public var errorDescription: String? {
         switch self {
         case .noScanData: return "Can not find scan data"
         case .noDiscoverServices: return "Can not discover services"
@@ -23,13 +23,7 @@ enum DroidError: Error, LocalizedError {
         }
     }
     
-    // fixme
-    var recoverySuggestion: String? {
-        switch self {
-        case .noScanData: return "Please try again"
-        case .noDiscoverServices: return "Please try again"
-        case .noCharacteristic: return "Please try again"
-        case .noBluetoothType: return "Please try again"
-        }
+    public var recoverySuggestion: String? {
+        "Please try again"
     }
 }

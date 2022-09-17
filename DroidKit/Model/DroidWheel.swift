@@ -1,5 +1,5 @@
 //
-//  DroidWheelOption.swift
+//  DroidOption.swift
 //  
 //
 //  Created by h.crane on 2022/09/17.
@@ -8,19 +8,19 @@
 import Foundation
 
 // MARK: - Wheel Type
-enum DroidWheel: UInt8 {
+public enum DroidWheel: UInt8 {
     case turn = 1
     case move = 2
 }
 
 // MARK: - Wheel Option Type
-enum DroidWheelOption {
+public enum DroidWheelOption {
     case go(speed: Double)
     case back(speed: Double)
     case turn(degree: Double)
     case end
     
-    var value: UInt8 {
+    public var value: UInt8 {
         switch self {
         case .go(let speed):
             /// if speed is less than 0, no calculation

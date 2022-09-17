@@ -8,7 +8,7 @@
 import Foundation
 
 // MARK: - Command Type
-enum DroidCommand: UInt8 {
+public enum DroidCommand: UInt8 {
     case changeLEDColor = 9
     case moveWheel = 10
     case playSound = 15

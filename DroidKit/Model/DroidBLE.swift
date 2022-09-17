@@ -9,7 +9,7 @@ import Foundation
 import CoreBluetooth
 
 // MARK: - BLE Type
-enum DroidBLE: String {
+public enum DroidBLE: String {
     case UUID_W32_SERVICE = "d9d9e9e0-aa4e-4797-8151-cb41cedaf2ad"
     case W32_BITSNAP_CHARACTERISTIC = "d9d9e9e1-aa4e-4797-8151-cb41cedaf2ad"
     case W32_BOARD_CONTROL_CHARACTERISTIC = "d9d9e9e2-aa4e-4797-8151-cb41cedaf2ad"
@@ -20,5 +20,5 @@ enum DroidBLE: String {
         .init(string: rawValue)
     }
     
-    static let W32_CONTROL_HUB = "w32 ControlHub"
+    public static let W32_CONTROL_HUB = "w32 ControlHub"
 }

@@ -1,3 +1,12 @@
+//
+//  DroidKitDebugView.swift
+//
+//
+//  Created by h.tsuruta on 2022/09/17.
+//
+
+#if DEBUG
+
 import SwiftUI
 
 // MARK: - View
@@ -6,6 +15,8 @@ struct DroidKitDebugView: View {
     @State private var speed: Double = 0.5
     @State private var duration: Double = 1.5
     @State private var degree: Double = 90
+    @State private var color = Color.clear
+    @State private var soundType: DroidSound = .s0
     
     var body: some View {
         ScrollView {
@@ -13,8 +24,8 @@ struct DroidKitDebugView: View {
                 connectionSection
                 movementSection
                 rotationSection
-                soundSection
                 colorSection
+                soundSection
             }
             .padding([.top, .bottom], 32)
         }
@@ -30,6 +41,7 @@ struct DroidKitDebugView: View {
                 debugPrint("didDisconnectPeripheral: \(peripheral), \(String(describing: error))")
             }
         }
+        .background(.black)
     }
 }
     
@@ -38,8 +50,7 @@ private extension DroidKitDebugView {
     
     var connectionSection: some View {
         VStack(spacing: 16) {
-            Text("Connection")
-                .font(.title2)
+            DroidKitSectionTitle(title: "Connection")
             
             HStack(spacing: 16) {
                 DroidKitActionButton(title: "Connect") {
@@ -54,23 +65,19 @@ private extension DroidKitDebugView {
     
     var movementSection: some View {
         VStack(spacing: 16) {
-            Text("Movement")
-                .font(.title2)
-            
-            HStack(spacing: 16) {
-                Text("Speed: \(String(format:"%.1f", speed))")
-
-                Slider(value: $speed, in: 0...1, step: 0.1)
-                    .frame(width: 140)
-            }
-            
-            HStack(spacing: 16) {
-                Text("Duration: \(String(format:"%.1f", duration))")
-                
-                Slider(value: $duration, in: 0...5, step: 0.1)
-                    .frame(width: 140)
-            }
-
+            DroidKitSectionTitle(title: "Movement")
+            DroidKitSliderRow(
+                label: "Speed: \(String(format:"%.1f", speed))",
+                value: $speed, 
+                range: 0...1, 
+                step: 0.1
+            )
+            DroidKitSliderRow(
+                label: "Duration: \(String(format:"%.1f", duration))",
+                value: $duration, 
+                range: 0...5,
+                step: 0.1
+            )
             HStack(spacing: 16) {
                 DroidKitActionButton(title: "Go") {
                     try await droidOperator.go(at: speed)
@@ -88,16 +95,13 @@ private extension DroidKitDebugView {
     
     var rotationSection: some View {
         VStack(spacing: 16) {
-            Text("Rotation")
-                .font(.title2)
-            
-            HStack(spacing: 16) {
-                Text("Degree: \(String(format:"%.f", degree))°")
-                
-                Slider(value: $degree, in: 0...180, step: 1)
-                    .frame(width: 140)
-            }
-            
+            DroidKitSectionTitle(title: "Rotation")
+            DroidKitSliderRow(
+                label: "Degree: \(String(format:"%.f", degree))°", 
+                value: $degree, 
+                range: 0...180, 
+                step: 1
+            )
             HStack(spacing: 16) {
                 DroidKitActionButton(title: "Turn") {
                     try await droidOperator.turn(by: degree)
@@ -110,22 +114,32 @@ private extension DroidKitDebugView {
         }
     }
     
-    var soundSection: some View {
+    var colorSection: some View {
         VStack(spacing: 16) {
-            Text("Sound")
-                .font(.title2)
-            
-            // try await droidOperator.playSound(.s4)
+            DroidKitSectionTitle(title: "Color")
+            DroidKitColorPickerRow(color: $color)
+            HStack(spacing: 16) {
+                DroidKitActionButton(title: "Set") {
+                    try await droidOperator.changeLEDColor(to: color.asUIColor)
+                }
+                DroidKitActionButton(title: "Reset") {
+                    color = .clear
+                    try await droidOperator.changeLEDColor(to: .clear)
+                }
+            }
         }
     }
     
-    var colorSection: some View {
+    var soundSection: some View {
         VStack(spacing: 16) {
-            Text("Color")
-                .font(.title2)
-            
-//            ColorPicker(<#T##title: StringProtocol##StringProtocol#>, selection: <#T##Binding<CGColor>#>)
-            // try await droidOperator.changeLEDColor(to: .green)
+            DroidKitSectionTitle(title: "Sound")
+            DroidKitMenuRow(soundType: soundType) { type in
+                guard let command = DroidSound(rawValue: type.rawValue) else { return }
+                try await droidOperator.playSound(command)
+                soundType = type
+            }
         }
     }
 }
+
+#endif

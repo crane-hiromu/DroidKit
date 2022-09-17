@@ -1,12 +1,13 @@
 //
 //  UIColor+Extensions.swift
-//  DroidController
+//
 //
 //  Created by h.crane on 2022/09/17.
 //
 
 import Foundation
 import UIKit
+import SwiftUI
 
 // MARK: - Extension
 extension UIColor {
@@ -28,5 +29,10 @@ extension UIColor {
         getRed(&red, green: &green, blue: &blue, alpha: nil)
         red *= 255; green *= 255; blue *= 255;
         return (UInt8(red), UInt8(green), UInt8(blue))
+    }
+    
+    /// convert to SwiftUI Color
+    var asColor: Color {
+        Color(self)
     }
 }
