@@ -26,7 +26,7 @@ protocol DroidOperatorProtocol: AnyObject {
     func stop(_ type: DroidWheel) async throws
     func changeLEDColor(to color: UIColor) async throws
     func playSound(_ type: DroidSound) async throws
-    func wait(for seconds: UInt64) async throws
+    func wait(for seconds: Double) async throws
 }
 
 // MARK: - Operator
@@ -114,7 +114,7 @@ extension DroidOperator: DroidOperatorProtocol {
     }
     
     /// keep the action
-    func wait(for seconds: UInt64) async throws {
-        try await Task.sleep(nanoseconds: seconds * 1_000_000_000)
+    func wait(for seconds: Double) async throws {
+        try await Task.sleep(nanoseconds: UInt64(seconds) * 1_000_000_000)
     }
 }
