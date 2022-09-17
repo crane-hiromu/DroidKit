@@ -143,6 +143,8 @@ Task {
 
 ### - back
 
+Move back.
+
 ```.swift
 Task {
     do {
@@ -169,6 +171,8 @@ Task {
 
 ### - stop
 
+Stop moving.
+
 ```.swift
 Task {
     do {
@@ -181,6 +185,8 @@ Task {
 
 ### - changeLEDColor
 
+Change body's LED ramp color.
+
 ```.swift
 Task {
     do {
@@ -192,6 +198,8 @@ Task {
 ```
 
 ### - playSound
+
+Play sound from droid.
 
 ```.swift
 Task {
