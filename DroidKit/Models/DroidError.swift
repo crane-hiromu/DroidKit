@@ -2,7 +2,7 @@
 //  DroidError.swift
 //  
 //
-//  Created by h.tsuruta on 2022/09/16.
+//  Created by h.crane on 2022/09/16.
 //
 
 import Foundation

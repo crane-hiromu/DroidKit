@@ -2,7 +2,7 @@
 //  DroidBLE.swift
 //
 //
-//  Created by h.tsuruta on 2022/09/17.
+//  Created by h.crane on 2022/09/17.
 //
 
 import Foundation
