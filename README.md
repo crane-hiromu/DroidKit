@@ -31,12 +31,12 @@ In short, you can create your own application with this **Swift** package.
 |:---:|:---:|:---:|
 |<img src="https://user-images.githubusercontent.com/24838521/190878634-ed828063-3215-4d18-9ce6-9493b13994e8.png" width=300>|<img src="https://user-images.githubusercontent.com/24838521/190878637-d149a8e2-14af-4622-80a2-54e416aa2959.png" width=300>|<img src="https://user-images.githubusercontent.com/24838521/190878640-acd9968e-4a0d-4a8d-93eb-ae166510b08c.png" width=300>|
 
-I have a screen in the code providing to check the operation.
+You can check the operation on sample app.
 
 If you want to use it, please remove the code comment out in [DroidApp.swift](https://github.com/crane-hiromu/DroidKit/blob/main/DroidKit/Screen/DroidApp.swift) and build.
 
 <br>
 
-## Code
+## Document
 
 wip
