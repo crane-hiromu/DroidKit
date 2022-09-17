@@ -13,7 +13,7 @@
 
 **'Droid Inventor Kit'** is a kit to create a droid. 
 
-In addition, the droid can be moved with simple programming from a smartphone.
+In addition, the droid can be operated with simple programming from a smartphone.
 
 However, there is a problem. 
 
