@@ -229,9 +229,30 @@ Task {
 
 <br>
 
-## Install
+## Installation
 
-### Swift Package Manager
+### 1. Clone
+
+Install [Swift Playgrounds](https://www.apple.com/jp/swift/playgrounds/) and open `DroidKit.swiftpm` that cloned following step.
+
+```bash
+$ git clone https://github.com/crane-hiromu/DroidKit DroidKit.swiftpm
+```
+
+Don't forget `.swiftpm` at the end!
+
+### 2. Setup
+
+Navigate to the project directory.
+
+```bash
+$ cd DroidKit.swiftpm
+```
+
+
+<br>
+
+## Swift Package Manager
 
 Add the following dependency to your Package.swift file:
 
