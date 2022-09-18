@@ -1,5 +1,5 @@
 //
-//  DroidManager.swift
+//  DroidConnector.swift
 //  
 //
 //  Created by h.crane on 2022/09/15.
