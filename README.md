@@ -12,15 +12,10 @@
 <br>
 
 **'Droid Inventor Kit'** is a kit to create a droid. 
-
 In addition, the droid can be operated with simple programming from a smartphone.
-
 However, there is a problem. 
-
 Currently, [the app has been removed from the store and cannot be installed](https://community.sphero.com/t/droid-inventor-kit-app-gone-from-play-app-store/2783).
-
 So I decided to provide code that can operate the droid from **Swift**.
-
 In short, you can create your own application with this **Swift** package.
 
 <br>
@@ -54,7 +49,7 @@ struct ContentView: View {
 
 There are 2 core code in this package.
 
-These are inspired by [tinkertanker/DroidKit](https://github.com/tinkertanker/DroidKit) and are also built on a **'Concurrency'** basis with [AsyncBluetooth](https://github.com/manolofdez/AsyncBluetooth).
+Inspired by [tinkertanker/DroidKit](https://github.com/tinkertanker/DroidKit) and are also built on a **'Concurrency'** basis with [AsyncBluetooth](https://github.com/manolofdez/AsyncBluetooth).
 
 ### - DroidConnector.swift
 
@@ -76,9 +71,7 @@ public protocol DroidConnectorProtocol: AnyObject {
 }
 ```
 
-This code contains the implementation around **Bluetooth**.
-
-You can access it, but basically you don't have to do it.
+This code contains the implementation around **Bluetooth**. You can access it, but basically you don't have to do it.
 
 ### - DroidOperator.swift
 
@@ -102,9 +95,7 @@ public protocol DroidOperatorProtocol: AnyObject {
 }
 ```
 
-This code contains the implementation around droid operation.
-
-You can operate droid.
+This code contains the implementation around droid operation. You can operate droid.
 
 <br>
 
