@@ -33,7 +33,7 @@ struct ActionButtonModifier: ViewModifier {
         content
             .font(.system(size: 16, weight: .bold, design: .default))
             .frame(width: 110, height: 44)
-            .background(.white)
+            .background(Color.white)
             .cornerRadius(8)
     }
 }

@@ -39,7 +39,7 @@ struct DroidKitDebugView: View {
                 debugPrint("didDisconnectPeripheral: \(peripheral), \(String(describing: error))")
             }
         }
-        .background(.black)
+        .background(Color.black)
     }
 }
     
