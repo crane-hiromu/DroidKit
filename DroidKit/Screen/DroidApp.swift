@@ -5,21 +5,24 @@
 //  Created by h.crane on 2022/09/17.
 //
 
-#if DEBUG
-
 import SwiftUI
+import PlaygroundTester
 
 /*
  If you want to check the debug screen, please remove the code comment out and build.
  */
-// @main
+//@main
 struct DroidApp: App {
+    
+    init() {
+        PlaygroundTester.PlaygroundTesterConfiguration.isTesting = false
+    }
     
     var body: some Scene {
         WindowGroup {
-            DroidKitDebugView()
+            PlaygroundTester.PlaygroundTesterWrapperView {
+                DroidKitDebugView()
+            }
         }
     }
 }
-
-#endif

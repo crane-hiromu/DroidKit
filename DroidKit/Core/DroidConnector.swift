@@ -171,18 +171,20 @@ extension DroidConnector {
     }
     
     func rawData(command: UInt8, payload: [UInt8]) -> [UInt8] {
-        var rawData: [UInt8] = .init(repeating: 0, count: payload.count + 4)
-        let crc = generateChecksumCRC16(bytes: payload)
+        let payloadCount = payload.count
+        var rawData: [UInt8] = .init(repeating: 0, count: payloadCount + 4)
+        let crc: Int = generateChecksumCRC16(bytes: payload)
+        let rawDataCount = rawData.count
         
-        rawData[0] = UInt8((command << 1) | (UInt8((payload.count & 256)) >> 8))
-        rawData[1] = UInt8(payload.count & 255)
+        rawData[0] = UInt8((command << 1) | (UInt8((payloadCount & 256)) >> 8))
+        rawData[1] = UInt8(payloadCount & 255)
         
-        for (n, item) in payload.enumerated() {
-            rawData[n + 2] = item
+        for n in (0..<payloadCount) {
+            rawData[n + 2] = payload[n]
         }
         
-        rawData[rawData.count - 1] = UInt8(crc & 255)
-        rawData[rawData.count - 2] = UInt8((crc & 65280) >> 8)
+        rawData[rawDataCount - 1] = UInt8(crc & 255)
+        rawData[rawDataCount - 2] = UInt8((crc & 65280) >> 8)
         
         return rawData
     }

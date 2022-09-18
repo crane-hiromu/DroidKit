@@ -5,8 +5,6 @@
 //  Created by h.crane on 2022/09/17.
 //
 
-#if DEBUG
-
 import SwiftUI
 
 // MARK: - View
@@ -19,5 +17,3 @@ struct DroidKitSectionTitle: View {
             .foregroundColor(.white)
     }
 }
-
-#endif

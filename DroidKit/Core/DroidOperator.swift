@@ -34,8 +34,8 @@ public final class DroidOperator {
     
     // MARK: Singleton
     
-    static let `default` = DroidOperator(connector: DroidConnector.default)
-    private init(connector: DroidConnectorProtocol) {
+    public static let `default` = DroidOperator(connector: DroidConnector.default)
+    init(connector: DroidConnectorProtocol) {
         self.connector = connector
     }
     

@@ -36,16 +36,23 @@ let package = Package(
         )
     ],
     dependencies: [
-        .package(url: "https://github.com/manolofdez/AsyncBluetooth", "1.3.0"..<"2.0.0")
+        .package(url: "https://github.com/manolofdez/AsyncBluetooth", "1.3.0"..<"2.0.0"),
+        .package(url: "https://github.com/Losiowaty/PlaygroundTester.git", "0.3.1"..<"0.4.0")
     ],
     targets: [
         .executableTarget(
             name: "AppModule",
             dependencies: [
-                .product(name: "AsyncBluetooth", package: "AsyncBluetooth")
+                .product(name: "AsyncBluetooth", package: "AsyncBluetooth"),
+                .product(name: "PlaygroundTester", package: "playgroundtester")
             ],
             path: ".",
-            exclude: ["README.md", "LICENSE"]
+            exclude: ["README.md", "LICENSE"],
+            swiftSettings: [
+                .unsafeFlags(["-Xfrontend", "-warn-long-function-bodies=200"], .when(configuration: .debug)),
+                .unsafeFlags(["-Xfrontend", "-warn-long-expression-type-checking=200"], .when(configuration: .debug)),
+                .define("TESTING_ENABLED", .when(configuration: .debug))
+            ]
         )
     ]
 )
