@@ -231,6 +231,8 @@ Task {
 
 ## Installation
 
+You can develop with [Xcode](https://developer.apple.com/xcode/) and [Swift Playgrounds](https://www.apple.com/jp/swift/playgrounds/).
+
 ### 1. Clone
 
 Install [Swift Playgrounds](https://www.apple.com/jp/swift/playgrounds/) and open `DroidKit.swiftpm` that cloned following step.
