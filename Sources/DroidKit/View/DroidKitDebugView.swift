@@ -9,14 +9,14 @@ import SwiftUI
 
 // MARK: - View
 public struct DroidKitDebugView: View {
-    private let droidOperator: DroidOperatorProtocol = DroidOperator.default
-    @State private var speed: Double = 0.5
-    @State private var duration: Double = 1.5
-    @State private var degree: Double = 90
-    @State private var color = Color.clear
-    @State private var soundType: DroidSound = .s0
+    private let droidOperator: DroidOperatorProtocol
+    @State private var speed: Double
+    @State private var duration: Double
+    @State private var degree: Double
+    @State private var color: Color
+    @State private var soundType: DroidSound
     
-    var body: some View {
+    public var body: some View {
         ScrollView {
             LazyVStack(spacing: 32) {
                 connectionSection
@@ -41,8 +41,24 @@ public struct DroidKitDebugView: View {
         }
         .background(Color.black)
     }
-}
     
+    public init(
+        droidOperator: DroidOperatorProtocol = DroidOperator.default,
+        speed: Double = 0.5,
+        duration: Double = 1.5,
+        degree: Double = 90,
+        color: Color = .clear,
+        soundType: DroidSound = .s0
+    ) {
+        self.droidOperator = droidOperator
+        self.speed = speed
+        self.duration = duration
+        self.degree = degree
+        self.color = color
+        self.soundType = soundType
+    }
+}
+
 // MARKL - Private
 private extension DroidKitDebugView {
     
@@ -66,13 +82,13 @@ private extension DroidKitDebugView {
             DroidKitSectionTitle(title: "Movement")
             DroidKitSliderRow(
                 label: "Speed: \(String(format:"%.1f", speed))",
-                value: $speed, 
-                range: 0...1, 
+                value: $speed,
+                range: 0...1,
                 step: 0.1
             )
             DroidKitSliderRow(
                 label: "Duration: \(String(format:"%.1f", duration))",
-                value: $duration, 
+                value: $duration,
                 range: 0...5,
                 step: 0.1
             )
@@ -95,9 +111,9 @@ private extension DroidKitDebugView {
         VStack(spacing: 16) {
             DroidKitSectionTitle(title: "Rotation")
             DroidKitSliderRow(
-                label: "Degree: \(String(format:"%.f", degree))°", 
-                value: $degree, 
-                range: 0...180, 
+                label: "Degree: \(String(format:"%.f", degree))°",
+                value: $degree,
+                range: 0...180,
                 step: 1
             )
             HStack(spacing: 16) {
