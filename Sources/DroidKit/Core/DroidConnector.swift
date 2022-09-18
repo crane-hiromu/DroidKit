@@ -173,7 +173,7 @@ extension DroidConnector {
     func rawData(command: UInt8, payload: [UInt8]) -> [UInt8] {
         let payloadCount = payload.count
         var rawData: [UInt8] = .init(repeating: 0, count: payloadCount + 4)
-        let crc: Int = generateChecksumCRC16(bytes: payload)
+        let crc: Int = payload.asCRC16
         let rawDataCount = rawData.count
         
         rawData[0] = UInt8((command << 1) | (UInt8((payloadCount & 256)) >> 8))
@@ -187,22 +187,5 @@ extension DroidConnector {
         rawData[rawDataCount - 2] = UInt8((crc & 65280) >> 8)
         
         return rawData
-    }
-    
-    func generateChecksumCRC16(bytes: [UInt8]) -> Int {
-        var bit = false, c15 = false, crc = 65535
-        
-        for b in bytes {
-            for i in 0..<8 {
-                bit = ((b >> (7 - i)) & 1) == 1
-                c15 = ((crc >> 15) & 1) == 1
-                crc <<= 1;
-                
-                if c15 != bit {
-                    crc ^= 4129
-                }
-            }
-        }
-        return crc & 65535
     }
 }
