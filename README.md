@@ -42,6 +42,8 @@ struct ContentView: View {
 }
 ```
 
+Don't forget to add bluetooth capability permission (`Bluetooth Always Usage Description`) on your project.
+
 
 <br>
 
