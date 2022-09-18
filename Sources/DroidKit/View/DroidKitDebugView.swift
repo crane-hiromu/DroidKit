@@ -8,7 +8,7 @@
 import SwiftUI
 
 // MARK: - View
-struct DroidKitDebugView: View {
+public struct DroidKitDebugView: View {
     private let droidOperator: DroidOperatorProtocol = DroidOperator.default
     @State private var speed: Double = 0.5
     @State private var duration: Double = 1.5
