@@ -90,7 +90,8 @@ public protocol DroidOperatorProtocol: AnyObject {
     func go(at speed: Double) async throws
     func back(at speed: Double) async throws
     func turn(by degree: Double) async throws
-    func stop(_ type: DroidWheel) async throws
+    func stop() async throws
+    func endTurn() async throws
     func changeLEDColor(to color: UIColor) async throws
     func playSound(_ type: DroidSound) async throws
     func wait(for seconds: Double) async throws
@@ -182,7 +183,21 @@ Stop moving.
 ```.swift
 Task {
     do {
-        try await DroidOperator.default.stop(.move)
+        try await DroidOperator.default.stop()
+    } catch {
+        // catch error
+    }
+}
+```
+
+### - endTurn
+
+Reset wheel degree.
+
+```.swift
+Task {
+    do {
+        try await DroidOperator.default.endTurn()
     } catch {
         // catch error
     }
