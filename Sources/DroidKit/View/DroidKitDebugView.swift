@@ -96,12 +96,12 @@ private extension DroidKitDebugView {
                 DroidKitActionButton(title: "Go") {
                     try await droidOperator.go(at: speed)
                     try await droidOperator.wait(for: duration)
-                    try await droidOperator.stop(.move)
+                    try await droidOperator.stop()
                 }
                 DroidKitActionButton(title: "Back") {
                     try await droidOperator.back(at: speed)
                     try await droidOperator.wait(for: duration)
-                    try await droidOperator.stop(.move)
+                    try await droidOperator.stop()
                 }
             }
         }
@@ -121,7 +121,7 @@ private extension DroidKitDebugView {
                     try await droidOperator.turn(by: degree)
                 }
                 DroidKitActionButton(title: "Reset") {
-                    try await droidOperator.stop(.turn)
+                    try await droidOperator.endTurn()
                 }
             }
             .padding(.bottom, 16)
