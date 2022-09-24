@@ -23,7 +23,8 @@ public protocol DroidOperatorProtocol: AnyObject {
     func go(at speed: Double) async throws
     func back(at speed: Double) async throws
     func turn(by degree: Double) async throws
-    func stop(_ type: DroidWheel) async throws
+    func stop() async throws
+    func endTurn() async throws
     func changeLEDColor(to color: UIColor) async throws
     func playSound(_ type: DroidSound) async throws
     func wait(for seconds: Double) async throws
@@ -80,13 +81,13 @@ extension DroidOperator: DroidOperatorProtocol {
     
     /// move forward
     public func go(at speed: Double) async throws {
-        let payload = [DroidWheel.move.rawValue, DroidWheelOption.go(speed: speed).value]
+        let payload = [DroidWheel.move.rawValue, DroidWheelMovementAction.go(speed: speed).value]
         try await action(command: .moveWheel, payload: payload)
     }
     
     /// move back
     public func back(at speed: Double) async throws {
-        let payload = [DroidWheel.move.rawValue, DroidWheelOption.back(speed: speed).value]
+        let payload = [DroidWheel.move.rawValue, DroidWheelMovementAction.back(speed: speed).value]
         try await action(command: .moveWheel, payload: payload)
     }
     
@@ -94,13 +95,19 @@ extension DroidOperator: DroidOperatorProtocol {
     /// - right: 0~90
     /// - left: 90~180
     public func turn(by degree: Double) async throws {
-        let payload = [DroidWheel.turn.rawValue, DroidWheelOption.turn(degree: degree).value]
+        let payload = [DroidWheel.turn.rawValue, DroidWheelTurnAction.turn(degree: degree).value]
         try await action(command: .moveWheel, payload: payload)
     }
     
     /// stop moving
-    public func stop(_ type: DroidWheel) async throws {
-        let payload = [type.rawValue, DroidWheelOption.end.value]
+    public func stop() async throws {
+        let payload = [DroidWheel.move.rawValue, DroidWheelMovementAction.end.value]
+        try await action(command: .moveWheel, payload: payload)
+    }
+    
+    /// reset  wheel degree
+    public func endTurn() async throws {
+        let payload = [DroidWheel.turn.rawValue, DroidWheelTurnAction.end.value]
         try await action(command: .moveWheel, payload: payload)
     }
     

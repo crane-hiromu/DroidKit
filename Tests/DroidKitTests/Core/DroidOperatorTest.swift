@@ -69,7 +69,7 @@ final class DroidOperatorTest: XCTestCase {
     func testStop() async throws {
         let droidConnectorMock = DroidConnectorMock()
         let droidOperator = DroidOperator(connector: droidConnectorMock)
-        try await droidOperator.stop(.move)
+        try await droidOperator.stop()
         
         XCTAssertTrue(droidConnectorMock.writeValueCalled)
     }

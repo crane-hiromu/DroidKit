@@ -11,13 +11,18 @@ import Foundation
 public enum DroidWheel: UInt8 {
     case turn = 1
     case move = 2
+    static let endValue: UInt8 = 128
 }
 
-// MARK: - Wheel Option Type
-public enum DroidWheelOption {
+// MARK: - Action Protocol
+protocol DroidWheelAction {
+    var value: UInt8 { get }
+}
+
+// MARK: - Movement Action Type
+public enum DroidWheelMovementAction: DroidWheelAction {
     case go(speed: Double)
     case back(speed: Double)
-    case turn(degree: Double)
     case end
     
     public var value: UInt8 {
@@ -38,6 +43,19 @@ public enum DroidWheelOption {
             /// canvert value
             return UInt8(128 - round(Double(128) * result))
             
+        case .end:
+            return DroidWheel.endValue
+        }
+    }
+}
+
+// MARK: - Turn Action Type
+public enum DroidWheelTurnAction: DroidWheelAction {
+    case turn(degree: Double)
+    case end
+    
+    public var value: UInt8 {
+        switch self {
         case .turn(let degree):
             /// if degree is less than 0, no calculation
             guard 0 < degree else { return 0 }
@@ -47,7 +65,7 @@ public enum DroidWheelOption {
             return UInt8(round(result / Double(180) * Double(255)))
             
         case .end:
-            return 128
+            return DroidWheel.endValue
         }
     }
 }
