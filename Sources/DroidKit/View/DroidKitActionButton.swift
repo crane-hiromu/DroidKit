@@ -13,7 +13,7 @@ struct DroidKitActionButton: View {
     let action: () async throws -> Void
     
     var body: some View {
-        Button(title) {
+        Button(action: {
             Task {
                 do {
                     try await action()
@@ -21,8 +21,10 @@ struct DroidKitActionButton: View {
                     debugPrint("fail to \(title): \(error.localizedDescription)")
                 }
             }
-        }
-        .modifier(ActionButtonModifier())
+        }, label: {
+            Text(title)
+                .modifier(ActionButtonModifier())
+        })
     }
 }
 
