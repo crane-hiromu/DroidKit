@@ -8,6 +8,15 @@
         "revision" : "fb709a49e4d27f34567f30cd01e8cbde623e624f",
         "version" : "1.3.0"
       }
+    },
+    {
+      "identity" : "swiftuijoystick",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/michael94ellis/SwiftUIJoystick",
+      "state" : {
+        "revision" : "5bd303cdafb369a70a45c902538b42dd3c5f4d65",
+        "version" : "1.5.0"
+      }
     }
   ],
   "version" : 2
