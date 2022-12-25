@@ -26,6 +26,7 @@ public struct DroidKitDebugView: View {
                 rotationSection
                 colorSection
                 soundSection
+                joystickSection
             }
             .padding([.top, .bottom], 32)
         }
@@ -153,6 +154,19 @@ private extension DroidKitDebugView {
                 guard let command = DroidSound(rawValue: type.rawValue) else { return }
                 try await droidOperator.playSound(command)
                 soundType = type
+            }
+        }
+    }
+    
+    var joystickSection: some View {
+        Group {
+            if #available(iOS 15.0, *) {
+                VStack(spacing: 16) {
+                    DroidKitSectionTitle(title: "Joystick")
+                    DroidJoystickView()
+                }
+            } else {
+                EmptyView()
             }
         }
     }

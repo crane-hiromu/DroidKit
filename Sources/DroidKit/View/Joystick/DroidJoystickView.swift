@@ -21,7 +21,8 @@ public struct DroidJoystickView: View {
             shape: .circle,
             background: { backgroundCircle },
             foreground: { foregroundCircle },
-            locksInPlace: false)
+            locksInPlace: false
+        )
     }
 }
 
