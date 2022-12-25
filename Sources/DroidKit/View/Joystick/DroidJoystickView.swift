@@ -24,6 +24,8 @@ public struct DroidJoystickView: View {
             locksInPlace: false
         )
     }
+    
+    public init() {}
 }
 
 // MARK: - Private
