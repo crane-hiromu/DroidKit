@@ -22,9 +22,9 @@ In short, you can create your own application with this **Swift** package.
 
 ### - Sample Screen
 
-|App|Color Picker|Sound Menu|
-|:---:|:---:|:---:|
-|<img src="https://user-images.githubusercontent.com/24838521/190878634-ed828063-3215-4d18-9ce6-9493b13994e8.png" width=300>|<img src="https://user-images.githubusercontent.com/24838521/190878637-d149a8e2-14af-4622-80a2-54e416aa2959.png" width=300>|<img src="https://user-images.githubusercontent.com/24838521/190878640-acd9968e-4a0d-4a8d-93eb-ae166510b08c.png" width=300>|
+|App|Color Picker|Sound Menu| Joystick |
+|:---:|:---:|:---:|:---:|
+|<img src="https://user-images.githubusercontent.com/24838521/190878634-ed828063-3215-4d18-9ce6-9493b13994e8.png" width=300>|<img src="https://user-images.githubusercontent.com/24838521/190878637-d149a8e2-14af-4622-80a2-54e416aa2959.png" width=300>|<img src="https://user-images.githubusercontent.com/24838521/190878640-acd9968e-4a0d-4a8d-93eb-ae166510b08c.png" width=300>|<img src="https://user-images.githubusercontent.com/24838521/209477318-0753da44-4343-40c6-be97-2fd372f76e4a.png" width=300>|
 
 <br>
 
