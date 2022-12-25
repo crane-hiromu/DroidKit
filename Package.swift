@@ -13,12 +13,16 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/manolofdez/AsyncBluetooth", "1.3.0"..<"2.0.0"),
+        .package(url: "https://github.com/michael94ellis/SwiftUIJoystick", "1.5.0"..<"2.0.0"),
+        .package(url: "https://github.com/crane-hiromu/CombineAsyncable", "0.3.0"..<"1.0.0")
     ],
     targets: [
         .target(
             name: "DroidKit",
             dependencies: [
                 .product(name: "AsyncBluetooth", package: "AsyncBluetooth"),
+                .product(name: "SwiftUIJoystick", package: "SwiftUIJoystick"),
+                .product(name: "CombineAsyncable", package: "CombineAsyncable"),
             ]),
         .testTarget(
             name: "DroidKitTests",
