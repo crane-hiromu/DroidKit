@@ -1,8 +1,8 @@
 //
-//  JoystickView.swift
+//  DroidJoystickDebugView.swift
 //  
 //
-//  Created by h.tsuruta on 2022/12/25.
+//  Created by h.tsuruta on 2022/12/26.
 //
 
 import Combine
@@ -11,23 +11,32 @@ import SwiftUIJoystick
 
 // MARK: - View
 @available(iOS 15.0, *)
-public struct DroidJoystickView: View {
+public struct DroidJoystickDebugView: View {
     @StateObject private var viewModel = DroidJoystickViewModel()
     
     public var body: some View {
-        JoystickBuilder(
-            monitor: viewModel.monitor,
-            width: viewModel.output.radius,
-            shape: .circle,
-            background: { backgroundCircle },
-            foreground: { foregroundCircle },
-            locksInPlace: false)
+        VStack {
+            Text("XY Point = (x: \(viewModel.monitor.xyPoint.x), y: \(viewModel.monitor.xyPoint.y))")
+                .fixedSize()
+            
+            Text("Polor Point = (\(viewModel.monitor.polarPoint.degrees), \(viewModel.monitor.polarPoint.distance)))")
+                .fixedSize()
+            
+            JoystickBuilder(
+                monitor: viewModel.monitor,
+                width: viewModel.output.radius,
+                shape: .circle,
+                background: { backgroundCircle },
+                foreground: { foregroundCircle },
+                locksInPlace: false)
+        }
+        .padding()
     }
 }
 
 // MARK: - Private
 @available(iOS 15.0, *)
-private extension DroidJoystickView {
+private extension DroidJoystickDebugView {
     
     var backgroundCircle: some View {
         let overlay = Circle()
