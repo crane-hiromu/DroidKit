@@ -255,7 +255,7 @@ Task {
 Add the following dependency to your Package.swift file:
 
 ```
-.package(url: "https://github.com/crane-hiromu/DroidKit", "2.1.1"..<"3.0.0")
+.package(url: "https://github.com/crane-hiromu/DroidKit", "2.2.2"..<"3.0.0")
 ```
 
 <br>
