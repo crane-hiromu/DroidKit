@@ -14,7 +14,7 @@
 **'Droid Inventor Kit'** is a kit to create a droid. 
 In addition, the droid can be operated with simple programming from a smartphone.
 However, there is a problem. 
-Currently, [the app has been removed from the store and cannot be installed](https://community.sphero.com/t/droid-inventor-kit-app-gone-from-play-app-store/2783).
+Currently, [the app has been removed from the store and cannot be installed](https://www.korg.com/jp/news/2021/0909/).
 So I decided to provide code that can operate the droid from **Swift**.
 In short, you can create your own application with this **Swift** package.
 
