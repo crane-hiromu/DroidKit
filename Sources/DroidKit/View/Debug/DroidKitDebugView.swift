@@ -36,8 +36,8 @@ public struct DroidKitDebugView: View {
                 debugPrint("willRestoreState: \(state)")
             case .didConnectPeripheral(let peripheral):
                 debugPrint("didConnectPeripheral: \(peripheral)")
-            case .didDisconnectPeripheral(let peripheral, let error):
-                debugPrint("didDisconnectPeripheral: \(peripheral), \(String(describing: error))")
+            case .didDisconnectPeripheral(let peripheral, let isReconnecting, let error):
+                debugPrint("didDisconnectPeripheral: \(peripheral), \(isReconnecting), \(String(describing: error))")
             }
         }
         .background(Color.black)

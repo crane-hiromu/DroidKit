@@ -5,8 +5,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/manolofdez/AsyncBluetooth",
       "state" : {
-        "revision" : "fb709a49e4d27f34567f30cd01e8cbde623e624f",
-        "version" : "1.3.0"
+        "revision" : "9ed2461064d158297b7450722e0883332f623751",
+        "version" : "1.9.0"
       }
     },
     {
@@ -14,8 +14,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/crane-hiromu/CombineAsyncable",
       "state" : {
-        "revision" : "bd61c6cc89cd41d7fca39114b85b182ea1f04515",
-        "version" : "0.3.1"
+        "revision" : "c00058215e7d3e6b124eaeffa69694c096ab18af",
+        "version" : "0.3.2"
       }
     },
     {
